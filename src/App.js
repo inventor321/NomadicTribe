@@ -9,7 +9,7 @@ function App() {
       <div className="container">
         <br/>
         <Routes>
-          <Route path="" element={<Home />} />
+          <Route path="NomadicTribe" element={<Home />} />
           <Route path="/MainPage" element={<MainPage />} />
           <Route path="*" element={<ErrorPage />} />
         </Routes>

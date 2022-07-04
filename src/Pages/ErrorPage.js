@@ -7,8 +7,8 @@ function ErrorPage() {
   console.log(window.location.href);
 
   return <body >PAGE DOES NOT EXIST
-      <h1>Hi! Try edit me {window.location.href}</h1>;
-      <h1>Hi! Try edit me {window.location.pathname}</h1>;
+      <h1> Window url {window.location.href}</h1>;
+      <h1> windown url path {window.location.pathname}</h1>;
       <Tabs></Tabs>
   </body>;
   
