@@ -1,0 +1,92 @@
+body{
+    background-color: #222;
+    height: 100%;
+    color: #eee;
+    z-index: 0;
+
+}
+
+.NT{
+    text-align: center;
+    font-size: 40px;
+}
+
+.chat{
+    margin: 5px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 250px;
+    height: 100%;
+    /* Fallback: Set a background color. */
+    background-color: linear-gradient(0deg, #222, black);
+    
+    /* Create the gradient. */
+    background-image: linear-gradient(0deg, #222, black);
+    
+    /* Set the background size and repeat properties. */
+    background-size: 100%;
+    background-repeat: repeat;
+
+    /* Use the text as a mask for the background. */
+    /* This will show the gradient as a text color rather than element bg. */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent; 
+    -moz-background-clip: text;
+    -moz-text-fill-color: transparent;
+    z-index: 3;
+}
+
+.background-chat{
+    width: 250px;
+    height: 100%;
+    position: fixed;
+    top: 0px;
+    left: 0px; 
+    padding: 5px;
+    background: linear-gradient(0deg,#222, #eee);
+    overflow: hidden;
+}
+
+
+.Tab_button_container{
+    position: absolute;
+    left: 50%;
+    transform:translateX(-50%);
+    top:30%;
+}
+
+
+#firstTabButton{
+    transform: translateX(-30px);
+}
+
+
+#thirdTabButton{
+    transform: translateX(30px);
+}
+
+.tab{
+    position: absolute;
+    left: 50%;
+    top:30%;
+    border: #eee;
+    border-style: solid;
+    border-width: 2px;
+    transform: translateY(20px) translateX(-50%);
+    width: 50%;
+    height: 400px;
+    background-color: #222;
+    z-index: 10;
+    overflow: hidden;
+    
+}
+
+#firstTab{
+    background-image: url('../Assets/ForestPattern.png');
+    background-size: 90%;
+    background-repeat: repeat ;
+}
+
+
+

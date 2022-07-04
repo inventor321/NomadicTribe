@@ -1,0 +1,49 @@
+.gather{
+    height: 40px;
+    width: 150px;
+    background-color:#fff;
+    z-index: 10;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    border-color: orange ;
+    border-width: 2px;
+    
+    
+}
+
+.gather:hover{
+    background-color:#ddd;
+}
+
+.cover{
+    height: 40px;
+    width: 0px;
+    z-index: 10;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    background-color: #fff;
+    opacity: 0.8;
+    box-shadow: 5px 5px 40px -5px #fff;
+}
+
+.gather:disabled{
+    background-color: #fff;
+    color: black;
+}
+
+
+#gatherHolder{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+
+    height: 40px;
+    width: 150px;
+    background-color: Yellow;
+    
+}
