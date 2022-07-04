@@ -9,8 +9,8 @@ function App() {
       <div className="container">
         <br/>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/MainPage" element={<MainPage />} />
+          <Route path="/NomadiTribe" element={<Home />} />
+          <Route path="/NomadiTribe/MainPage" element={<MainPage />} />
           <Route path="*" element={<ErrorPage />} />
         </Routes>
       </div>
