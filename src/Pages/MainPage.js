@@ -1,5 +1,5 @@
 import React, { Component, useCallback, useState } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import CooldownButton from "../Widgets/CooldownButton";
 import RessourceCounter from "../Widgets/RessourceCounter";
 import './MainPage.css';
@@ -18,6 +18,9 @@ class MainPage extends Component {
         this.swordsNextRequirements = [50,100,200,350,500,1000]
         this.state = {
             messages:["You wake up in a dim dense forest."],
+
+            alive:true,
+            fade:false,
 
             swordIndex: 0,
             
@@ -49,6 +52,8 @@ class MainPage extends Component {
         }
     }
 
+    
+
     warningFire1 = () =>{
         this.addText('You hear leafs rustling around you. Your heart rate increases.');
         this.setState({
@@ -69,7 +74,15 @@ class MainPage extends Component {
 
     GameOverFire = () =>{
         this.addText('You get taken out by the creatures of the forest. Your journey ends here.');
-        useNavigate("/GameOver");
+        this.setState({
+            fade:true,
+            lifeTimer: new timer(() => {
+                this.setState({
+                    alive:false,
+                });
+            }, 3000),
+        });
+        
     }
 
 
@@ -120,6 +133,7 @@ class MainPage extends Component {
 
     startFire = () => {
         if(this.state.wood>=5 && !this.state.fire){
+            this.state.lifeTimer.pause();
             this.setState({
                 wood:this.state.wood-5,
                 fire:true,
@@ -143,6 +157,10 @@ class MainPage extends Component {
 
   render = () => <body className="Background-Body">
       
+
+      { this.state.fade ? (<div className="fade"></div>) : null }
+      { !this.state.alive ? (<Navigate to="/GameOver"/>) : null }
+
       <div className="NT">Nomadic Tribe</div>
       
       <div>
