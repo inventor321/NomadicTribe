@@ -4,6 +4,12 @@ Text based survival game.
 
 Made with React JS
 
-Cool code from Codepen :
-Sources : https://codepen.io/artyom-ivanov/pen/MoxENg
+Source of bits of code taken from Codepen :
+ -https://codepen.io/artyom-ivanov/pen/MoxENg
+ -
+ -
+ 
+ If you got any suggestions feel free to contact me.
+ 
+ Also currently looking for a job.
 
