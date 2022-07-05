@@ -3,13 +3,10 @@ import Tabs from "../Widgets/Tabs";
 
 function ErrorPage() {
 
-  
-  console.log(window.location.href);
 
   return <body >PAGE DOES NOT EXIST
-      <h1> Window url {window.location.href}</h1>;
-      <h1> windown url path {window.location.pathname}</h1>;
-      <Tabs></Tabs>
+      <h1> Your entire window url is : {window.location.href}</h1>;
+      <h1> Your windown url path is : {window.location.pathname}</h1>;
   </body>;
   
 }

@@ -1,5 +1,5 @@
 import React, { Component, useCallback, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import CooldownButton from "../Widgets/CooldownButton";
 import RessourceCounter from "../Widgets/RessourceCounter";
 import './MainPage.css';
@@ -35,10 +35,41 @@ class MainPage extends Component {
             timer: new timer(() => {
                 this.addText('You should start a fire to keep the beasts away.')
             }, 3000),
+
+            fireTimer: new timer(() => {
+            }, 1000),
+
+            lifeTimer: new timer(() => {
+                this.warningFire1()
+            }, 15000),
             
+
             fire:false,
 
         }
+    }
+
+    warningFire1 = () =>{
+        this.addText('You hear leafs rustling around you. Your heart rate increases.');
+        this.setState({
+            lifeTimer: new timer(() => {
+                this.warningFire2()
+            }, 15000),
+        })
+    }
+
+    warningFire2 = () =>{
+        this.addText('The noises around you grow in number and in volume. You hear the growls of the beasts.');
+        this.setState({
+            lifeTimer: new timer(() => {
+                this.GameOverFire()
+            }, 15000),
+        })
+    }
+
+    GameOverFire = () =>{
+        this.addText('You get taken out by the creatures of the forest. Your journey ends here.');
+        useNavigate("/GameOver");
     }
 
 
@@ -52,6 +83,8 @@ class MainPage extends Component {
             activeTab:changeTo,
         });
     }
+
+    
 
     addText = (newMessage) => {
         this.setState({
@@ -91,7 +124,7 @@ class MainPage extends Component {
                 wood:this.state.wood-5,
                 fire:true,
             });
-            this.addText('You successfully started a fire.')
+            this.addText('You successfully started a fire. This should keep away the beasts for now.')
         }
         
     }
@@ -136,7 +169,7 @@ class MainPage extends Component {
       
 
       
-        <div className="background-chat"><div className="chat">{this.state.messages.map((message) => (<div>{message}</div>))}</div></div>
+        <div className="background-chat"><div className="chat">{this.state.messages.map((message) => (<div className="message">{message}</div>))}</div></div>
     </body>;
 }
 

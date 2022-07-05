@@ -1,0 +1,7 @@
+.joke{
+    display: none;
+}
+
+button:hover + .joke{
+    display: block;
+}
