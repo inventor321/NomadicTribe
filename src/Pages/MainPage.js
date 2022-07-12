@@ -209,7 +209,7 @@ class MainPage extends Component {
             this.addText('You successfully started a fire. This should keep away the beasts for now.')
         }
         
-    }
+    } 
 
     upgradeSword = () => {
         if(this.state.wood>=this.swordsNextRequirements[this.state.swordIndex]){
@@ -217,7 +217,7 @@ class MainPage extends Component {
                 wood:this.state.wood-this.swordsNextRequirements[this.state.swordIndex],
                 swordIndex:this.state.swordIndex+1,
             });
-            this.addText('You upgraded your sword.')
+            this.addText('You upgraded your sword!')
         }
         
     }
