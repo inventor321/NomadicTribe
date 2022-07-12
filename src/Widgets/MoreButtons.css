@@ -35,18 +35,26 @@
     color: black;
 }
 
+.E{
+    top:30px;
+}
+
 .TT{
     top:30px;
 }
 
-.C{
+.TT{
     top: 70px;
 }
 
-.O{
+.C{
     top:110px;
 }
 
-.MC{
+.O{
     top:150px;
+}
+
+.MC{
+    top:190px;
 }

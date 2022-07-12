@@ -4,25 +4,56 @@ import Campfire from './Campfire';
 
 export default class RessourceCounter extends Component{
     
-    constructor(){
-        super();
-    };    
+    constructor(props){
+        super(props);
+        console.log("We have : ",this.props.wood);
+    }
+
+    componentDidMount() {
+        this.props.updateRessources()
+        this.FWorkers = setInterval(()=>{
+            this.props.addRessources('W')
+        }, 1000);
+        this.WWorkers = setInterval(()=>{
+            this.props.addRessources('F')
+        }, 1000);
+        console.log("We have wood : ",this.props.wood);
+        
+    }
+    
+    componentWillUnmount() { 
+        clearInterval(this.FWorkers);
+        clearInterval(this.WWorkers);
+        this.props.lastWorking(new Date());
+    }
 
     startFire = event => {
         console.log('Started Fire')
         this.props.startFire();
     };
 
-    render = () => (
+    addW = (addsub, type) => {
+        this.props.addW(addsub, type);
+    }
+
+    
+
+    render = () =>{ 
+        console.log(this.props.wood, "!!!")
+        return(
         <div>
             <div className="ressourceContainer">
             
-                <div className="Population"> Population : {this.props.population}</div>
-                <div className="Food">Food : {this.props.food}</div>
-                <div className="Wood">Wood : {this.props.wood}</div>
+                <div className="Population"> Population : {this.props.population}/{this.props.maxPopulation} </div> 
+                <div className="Food">Food : {this.props.food} </div>
+                <div className="Wood">Wood : {this.props.wood} </div>
+            </div>
+            <div className="workerContainer">
+                <div className="workers"> {this.props.population-1} Workers </div>
+                <div className="workers"> <button onClick={() => this.addW(true,'F')}>+</button> {this.props.FW} <button onClick={() =>this.addW(false,'F')}>-</button> </div>
+                <div className="workers"> <button onClick={() =>this.addW(true,'W')}>+</button> {this.props.WW} <button onClick={() =>this.addW(false,'W')}>-</button> </div>
             </div>
             {this.props.fire && <Campfire></Campfire>}
-            
 
             <div className="shopMargin">
                 <div className="shopContainer">
@@ -30,14 +61,14 @@ export default class RessourceCounter extends Component{
                     <h1 id="shop"> Craft </h1>
 
 
-                    <div class="cta-container campfire">
-                        <div class="button">
-                            <div class="square-front">
-                            <div class="relative-box">
-                                <span class="line line-top"></span>
-                                <span class="line line-right"></span>
-                                <span class="line line-bottom"></span>
-                                <span class="line line-left"></span>
+                    <div className="cta-container campfire">
+                        <div className="button">
+                            <div className="square-front">
+                            <div className="relative-box">
+                                <span className="line line-top"></span>
+                                <span className="line line-right"></span>
+                                <span className="line line-bottom"></span>
+                                <span className="line line-left"></span>
                             </div>
                             </div>
                             {!this.props.fire && <button className="label" onClick={this.startFire} > Start Fire </button>}
@@ -51,14 +82,14 @@ export default class RessourceCounter extends Component{
                     </div>
  
 
-                    <div class="cta-container sword">
-                        <div class="button">
-                            <div class="square-front">
-                            <div class="relative-box">
-                                <span class="line line-top"></span>
-                                <span class="line line-right"></span>
-                                <span class="line line-bottom"></span>
-                                <span class="line line-left"></span>
+                    <div className="cta-container sword">
+                        <div className="button">
+                            <div className="square-front">
+                            <div className="relative-box">
+                                <span className="line line-top"></span>
+                                <span className="line line-right"></span>
+                                <span className="line line-bottom"></span>
+                                <span className="line line-left"></span>
                             </div>
                             </div>
                             <button className="label" > {this.props.swordInfo[2]} </button>  
@@ -77,4 +108,5 @@ export default class RessourceCounter extends Component{
         </div>
        
     );
+}
 }

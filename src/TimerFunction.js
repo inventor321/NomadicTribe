@@ -34,3 +34,23 @@ export function timer(callback, delay) {
         this.start()
     };
     
+
+    export function intervalTimer(callback, delay) {
+        var id, started, remaining = delay, running
+
+    
+        this.start = function() {
+            if(remaining>0){
+                running = true
+                started = new Date()
+                id = setInterval(callback, remaining);
+            }
+            
+        }
+    
+        this.end = function() {
+            clearInterval(id)
+        }
+
+        this.start()
+    };

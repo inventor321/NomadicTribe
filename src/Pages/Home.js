@@ -1,14 +1,24 @@
-import React from "react";
+import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import './Home.css'
+import MainPage from "./MainPage";
 
-function Home() {
-  return <body className="Background-Body">
-  <Link className="Arise" to="/MainPage">Arise</Link>
-  <div className="FTD">From The Darkness</div>
+class Home extends Component {
   
 
-</body>;
+  clickHandle = () => {
+    this.props.clickHandle();
+  }
+//<Link className="Arise" to="/MainPage">Arise</Link>
+  render = () => <div className="Background-Body">
+      { !this.props.startGame && <div>
+      
+      <button className="Arise" onClick={this.clickHandle}> Arise </button>
+      <div className="FTD">From The Darkness</div>
+
+      </div> }
+
+    </div>;
 }
 
 export default Home;
