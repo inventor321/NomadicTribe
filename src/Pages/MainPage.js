@@ -88,7 +88,7 @@ class MainPage extends Component {
     
 
     componentWillUnmount() {
-        
+        this.componentCleanup()
         window.removeEventListener('beforeunload', this.componentCleanup); // remove the event handler for normal unmounting
     }
 
@@ -287,9 +287,7 @@ class MainPage extends Component {
         }
       }
 
-      clearStorage(){
-        localStorage.clear();
-      }
+      
   render () {
 
       return <body className="Background-Body">
@@ -311,7 +309,7 @@ class MainPage extends Component {
       { this.state.fade ? (<div className="fade"></div>) : null }
       { !this.state.alive ? (<Navigate to="/GameOver"/>) : null }
 
-      <div className="NT">Nomadic Tribe <button onClick={this.clearStorage}>clear storage</button></div>
+      <div className="NT">Nomadic Tribe</div>
       
       
       <div>
