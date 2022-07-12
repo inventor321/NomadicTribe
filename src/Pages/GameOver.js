@@ -35,21 +35,22 @@ function GameOver() {
     ocean:false,
     magicRuins:false,
     
-    gatherTime:new Date().setSeconds(new Date().getSeconds - 10),
+    gatherTime:new Date((new Date).getTime() - 10*1000),
     
 
     fire:false,
 
-};
+}
 
   
   window.localStorage.setItem('state',JSON.stringify(state));
+  console.log('saved')
   
 
   return <body >
       <h1> GameOver </h1>
       <h2> You were not able to keep your fire going. The creatures of the forest took you out.</h2>
-      <button> Try again </button>
+      <button onclick={()=> {window.localStorage.setItem('state',JSON.stringify(state));}}> Try again </button>
       <p className="joke"> lol button dosent work yet, <br></br> click on the button that brings you to the previous page on your browser instead</p>
   </body>
   

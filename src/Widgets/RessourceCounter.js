@@ -6,7 +6,6 @@ export default class RessourceCounter extends Component{
     
     constructor(props){
         super(props);
-        console.log("We have : ",this.props.wood);
     }
 
     componentDidMount() {
@@ -17,7 +16,6 @@ export default class RessourceCounter extends Component{
         this.WWorkers = setInterval(()=>{
             this.props.addRessources('F')
         }, 1000);
-        console.log("We have wood : ",this.props.wood);
         
     }
     
@@ -28,7 +26,6 @@ export default class RessourceCounter extends Component{
     }
 
     startFire = event => {
-        console.log('Started Fire')
         this.props.startFire();
     };
 
@@ -39,7 +36,6 @@ export default class RessourceCounter extends Component{
     
 
     render = () =>{ 
-        console.log(this.props.wood, "!!!")
         return(
         <div>
             <div className="ressourceContainer">

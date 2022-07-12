@@ -24,6 +24,7 @@ class MainPage extends Component {
 
             //console.log("finale state", typeof Date.parse( this.state.gatherTime), new Date(Date.parse( this.state.gatherTime)))
         }else{
+            console.log('NNNEEEEWWW SSTTAAATTEEEE')
             this.state = {
 
                 startAnimation:false,
@@ -63,10 +64,14 @@ class MainPage extends Component {
             }
         }
         
-        
+        this.componentCleanup = this.componentCleanup.bind(this);
         
     }
 
+    componentCleanup() { 
+        window.localStorage.setItem('state',JSON.stringify(this.state));
+        clearTimeout(this.gatherer);
+    }
     
     componentDidMount() {
         let timePassed = this.state.gatherTime-new Date();
@@ -78,52 +83,50 @@ class MainPage extends Component {
         }, 10000-timePassed);
         this.updateDates()
         console.log(this.state, typeof this.state.gatherTime)
+        window.addEventListener('beforeunload', this.componentCleanup);
     }
     
-    componentWillUnmount() { 
-        window.localStorage.setItem('state',JSON.stringify(this.state));
-        window.localStorage.setItem('date',JSON.stringify(this.state.gatherTime));
-        clearTimeout(this.gatherer);
 
+    componentWillUnmount() {
+        
+        window.removeEventListener('beforeunload', this.componentCleanup); // remove the event handler for normal unmounting
     }
 
     updateDates(){
         this.setState({
             gatherTime:new Date(Date.parse(this.state.gatherTime)),
             lastWork:new Date(Date.parse(this.state.lastWork)),
+            wood:parseInt(this.state.wood),
+            food:parseInt(this.state.food)
         })
     }
 
 
     warningFire1 = () =>{
         this.addText('You hear leafs rustling around you. Your heart rate increases.');
-        this.setState({
-            lifeTimer: new timer(() => {
-                this.warningFire2()
-            }, 15000),
-        })
+        this.lightTimer = setTimeout(() => {
+            this.warningFire2()
+        }, 15000);
         
     }
 
     warningFire2 = () =>{
         this.addText('The noises around you grow in number and in volume. You hear the growls of the beasts.');
-        this.setState({
-            lifeTimer: new timer(() => {
+        this.lightTimer = setTimeout(() => {
                 this.GameOverFire()
-            }, 15000),
-        })
+        }, 15000);
     }
 
     GameOverFire = () =>{
         this.addText('You get taken out by the creatures of the forest. Your journey ends here.');
         this.setState({
             fade:true,
-            lifeTimer: new timer(() => {
-                this.setState({
-                    alive:false,
-                });
-            }, 5000),
         });
+        setTimeout(() => {
+            this.setState({
+                alive:false,
+            });
+        }, 5000)
         
     }
 
@@ -202,6 +205,7 @@ class MainPage extends Component {
 
     startFire = () => {
         if(this.state.wood>=5 && !this.state.fire){
+            clearTimeout( this.lightTimer)
             this.setState({
                 wood:this.state.wood-5,
                 fire:true,
@@ -224,24 +228,28 @@ class MainPage extends Component {
 
     clickHandle = () => {
         this.setState({
-          startAnimation:true,
-          lifeTimer: new timer(() => {
-            this.warningFire1()
-        }, 20000)
+          startAnimation:true
         })
+        this.lightTimer = setTimeout(() => {
+            this.warningFire1()
+        }, 15000);
         
         setTimeout(() => { 
-          this.setState({
-          
-          startGame:true
-        })},900)
+            console.log('game started')
+            this.setState({
+                startGame:true
+            })
+            console.log(this.state.startGame)
+        },900)
+        
+
         setTimeout(()=>{
+            this.addText("You should start a fire to keep yourself safe")
             this.setState({
                 startAnimation:false
-                
             })
             console.log('its done')
-        },3000)
+        },5000)
       }
 
 
@@ -279,6 +287,9 @@ class MainPage extends Component {
         }
       }
 
+      clearStorage(){
+        localStorage.clear();
+      }
   render () {
 
       return <body className="Background-Body">
@@ -300,7 +311,8 @@ class MainPage extends Component {
       { this.state.fade ? (<div className="fade"></div>) : null }
       { !this.state.alive ? (<Navigate to="/GameOver"/>) : null }
 
-      <div className="NT">Nomadic Tribe</div>
+      <div className="NT">Nomadic Tribe <button onClick={this.clearStorage}>clear storage</button></div>
+      
       
       <div>
           <div className="Tab_button_container">
