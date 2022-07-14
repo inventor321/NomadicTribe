@@ -7,8 +7,18 @@ export default class CooldownButton extends Component{
         this.state={timeGot:false}
     }
 
+    componentDidMount() {
+        let timePassed = this.props.gatherTime-new Date();
+        this.gatherer = setTimeout(() => {
+            this.props.enable();
+        }, 10000-timePassed);
+    }
+
+    componentWillUnmount(){
+        clearTimeout(this.gatherer)
+    }
+
     gather = event => {
-        console.log('gathered')
         this.props.onGather();
         
     };

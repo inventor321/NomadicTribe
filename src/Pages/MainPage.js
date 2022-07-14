@@ -18,13 +18,9 @@ class MainPage extends Component {
         this.swords = ['Wooden Sword', 'Stone Sword', 'Copper Sword', 'Bronze Sword', 'Iron Sword', 'Steel Sword']
         this.swordsNextRequirements = [50,100,200,350,500,1000]
         if(window.localStorage.getItem('state')!==null){
-            console.log(JSON.parse(window.localStorage.getItem('state')))
-            console.log(typeof JSON.parse(window.localStorage.getItem('state')))
             this.state=JSON.parse(window.localStorage.getItem('state'))
 
-            //console.log("finale state", typeof Date.parse( this.state.gatherTime), new Date(Date.parse( this.state.gatherTime)))
         }else{
-            console.log('NNNEEEEWWW SSTTAAATTEEEE')
             this.state = {
 
                 startAnimation:false,
@@ -70,19 +66,10 @@ class MainPage extends Component {
 
     componentCleanup() { 
         window.localStorage.setItem('state',JSON.stringify(this.state));
-        clearTimeout(this.gatherer);
     }
     
     componentDidMount() {
-        let timePassed = this.state.gatherTime-new Date();
-        if(timePassed<10)
-        this.gatherer = setTimeout(() => {
-            this.setState({
-                gatherState:false,
-            });
-        }, 10000-timePassed);
-        this.updateDates()
-        console.log(this.state, typeof this.state.gatherTime)
+        this.updateDates();
         window.addEventListener('beforeunload', this.componentCleanup);
     }
     
@@ -98,6 +85,12 @@ class MainPage extends Component {
             lastWork:new Date(Date.parse(this.state.lastWork)),
             wood:parseInt(this.state.wood),
             food:parseInt(this.state.food)
+        })
+    }
+
+    enable = () =>{
+        this.setState({
+            gatherState:false
         })
     }
 
@@ -168,7 +161,6 @@ class MainPage extends Component {
             
             
         });
-        console.log(this.state.gatherTime)
         setTimeout(() => {
             this.setState({
                 gatherState:false,
@@ -195,12 +187,10 @@ class MainPage extends Component {
 
     updateRessources = () =>{
         let time = parseInt((new Date() - this.state.lastWork)/1000)
-        console.log(time, "is the time", this.state.lastWork)
         this.setState({
             wood:this.state.wood + this.state.WW*time,
             food:this.state.food + this.state.FW*time
         })
-        console.log(this.state.wood, this.state.food, "are the ressources")
     }
 
     startFire = () => {
@@ -235,11 +225,9 @@ class MainPage extends Component {
         }, 15000);
         
         setTimeout(() => { 
-            console.log('game started')
             this.setState({
                 startGame:true
             })
-            console.log(this.state.startGame)
         },900)
         
 
@@ -248,7 +236,6 @@ class MainPage extends Component {
             this.setState({
                 startAnimation:false
             })
-            console.log('its done')
         },5000)
       }
 
@@ -320,7 +307,7 @@ class MainPage extends Component {
       </div>
       <div>
             {this.state.activeTab === 1 && <div className="tab" id="firstTab">
-                <CooldownButton onGather = {this.gather}  gatherState ={this.state.gatherState} gatherTime = {this.state.gatherTime}/>
+                <CooldownButton onGather = {this.gather} enable={this.enable}  gatherState ={this.state.gatherState} gatherTime = {this.state.gatherTime}/>
             
               
               </div>}
