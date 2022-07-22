@@ -210,7 +210,7 @@ class MainPage extends Component {
         let time = parseInt((new Date() - this.state.lastWork)/1000)
 
         this.addRes(this.state.WW*time,"W")
-        this.addRes(this.state.FW*time-parseInt(this.state.population*time/5),"F")
+        this.addRes(this.state.FW*time,"F") //-parseInt(this.state.population*time/5)
 
     }
 

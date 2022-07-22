@@ -9,7 +9,7 @@ class Explore extends Component {
     if(window.localStorage.getItem('state')!==null){
       this.state=JSON.parse(window.localStorage.getItem('state'))
     } 
-    this.attackDMG = [5, 3, 6, 10, 15, 21, 28]
+    this.attackDMG = [1, 3, 6, 10, 15, 21, 28]
 
     
     this.entities = ["Rat", "Mischief", "Huge Rat", "Wolf","A Pack", "Cub", "Mama Bear"]
