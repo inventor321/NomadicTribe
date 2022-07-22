@@ -1,7 +1,19 @@
-.joke{
-    display: none;
+.restart{
+    color: white;
+    padding: 10px;
+    padding-top: 5px;
+    text-decoration: none;
+    border: 1px solid white;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+    font-weight: 500;
+    width: 80px;
+    text-align: center;
 }
 
-button:hover + .joke{
-    display: block;
+.restart:hover{
+    background-color: white;
+    color: black;
+    font-weight: 700;
 }

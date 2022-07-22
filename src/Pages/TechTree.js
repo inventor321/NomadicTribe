@@ -1,12 +1,14 @@
 import React from "react";
-import Tabs from "../Widgets/Tabs";
+import "./TechTree.css"
 
 function TechTree() {
 
 
-  return <body >PAGE DOES NOT EXIST
-      <h1> Your entire window url is : {window.location.href}</h1>;
-      <h1> Your windown url path is : {window.location.pathname}</h1>;
+  return <body > 
+    
+    <div className="Title"> TECHTREE</div>
+
+    <div className="contactInfo"> if you have any suggestions for the TechTree send me an email here : thefirstinventor321@gmail.com </div>
   </body>;
   
 }

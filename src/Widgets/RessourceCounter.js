@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import './RessourceCounter.css';
 import Campfire from './Campfire';
+import CraftButton from "./CraftButton";
 
 export default class RessourceCounter extends Component{
     
@@ -16,12 +17,15 @@ export default class RessourceCounter extends Component{
         this.WWorkers = setInterval(()=>{
             this.props.addRessources('F')
         }, 1000);
+
+        //this.hunger = setInterval(()=>{this.props.hunger()},5000)
         
     }
     
     componentWillUnmount() { 
         clearInterval(this.FWorkers);
         clearInterval(this.WWorkers);
+        clearInterval(this.hunger);
         this.props.lastWorking(new Date());
     }
 
@@ -78,23 +82,7 @@ export default class RessourceCounter extends Component{
                     </div>
  
 
-                    <div className="cta-container sword">
-                        <div className="button">
-                            <div className="square-front">
-                            <div className="relative-box">
-                                <span className="line line-top"></span>
-                                <span className="line line-right"></span>
-                                <span className="line line-bottom"></span>
-                                <span className="line line-left"></span>
-                            </div>
-                            </div>
-                            <button className="label" > {this.props.swordInfo[2]} </button>  
-                            
-                        </div>
-                        <div className="resNeeded" >
-                        {this.props.swordInfo[1]}
-                        </div>
-                    </div>
+                    {this.props.swordInfo[0]>6 &&<CraftButton swordInfo ={this.props.swordInfo} upgradeSword ={this.props.upgradeSword}/>}
 
                     
 

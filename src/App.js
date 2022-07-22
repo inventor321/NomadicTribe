@@ -6,6 +6,7 @@ import MainPage from "./Pages/MainPage";
 import GameOver from "./Pages/GameOver";
 import Explore from "./Pages/Explore";
 import RessourceCounter from "./Widgets/RessourceCounter";
+import TechTree from "./Pages/TechTree";
 
 
 
@@ -19,6 +20,7 @@ function App() {
           <Route path="/GameOver" element={<GameOver />} />
           <Route path="/MagicRuins" element={<MagicRuins />} />
           <Route path="/Explore" element={<Explore />} />
+          <Route path="/TechTree" element={<TechTree />} />
           <Route path="*" element={<ErrorPage />} />
         </Routes>
       </div>

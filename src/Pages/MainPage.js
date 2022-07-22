@@ -25,7 +25,7 @@ class MainPage extends Component {
 
                 startAnimation:false,
                 startGame:false,
-    
+
                 messages:["You wake up in a dim dense forest."],
     
                 alive:true,
@@ -37,14 +37,14 @@ class MainPage extends Component {
     
                 gatherState:false,
     
-                population:5,
-                maxPopulation:5,
+                population:1,
+                maxPopulation:1,
 
 
                 FW : 0,
                 WW : 0,
                 lastWork : new Date(),
-    
+                
     
                 food:10,
                 wood:10,
@@ -56,6 +56,14 @@ class MainPage extends Component {
                 
     
                 fire:false,
+
+                E:false,
+                TT:false,
+                C:false,
+                O:false,
+                MC:false,
+
+                explorations:0,
     
             }
         }
@@ -65,6 +73,7 @@ class MainPage extends Component {
     }
 
     componentCleanup() { 
+        clearInterval(this.hunger)
         window.localStorage.setItem('state',JSON.stringify(this.state));
     }
     
@@ -135,15 +144,30 @@ class MainPage extends Component {
         });
     }
 
+
+    addRes(amount, type){
+        if(type==='W'){
+            this.setState({
+                wood:this.state.wood+amount
+            })
+        }else if(type==='F'){
+            this.setState({
+                food:this.state.food+amount
+            })
+        }
+        if(this.state.wood>100){
+            this.setState({
+                TT:true,
+            })
+        }
+
+    }
+
     addRessources = worker => {
         if(worker==='W'){
-            this.setState({
-                wood:this.state.wood+this.state.WW
-            })
+            this.addRes(this.state.WW, 'W')
         }else if(worker==='F'){
-            this.setState({
-                food:this.state.food+this.state.FW
-            })
+            this.addRes(this.state.FW, 'F')
         }
     }
 
@@ -158,9 +182,8 @@ class MainPage extends Component {
         this.setState({
             gatherState:true,
             gatherTime:new Date()
-            
-            
         });
+        
         setTimeout(() => {
             this.setState({
                 gatherState:false,
@@ -172,10 +195,8 @@ class MainPage extends Component {
 
         let newWood = this.getRandomInt(10);
         let newFood = this.getRandomInt(10);
-        this.setState({
-            wood: this.state.wood+newWood,
-            food: this.state.food+newFood
-        });
+        this.addRes(newWood,"W")
+        this.addRes(newFood,"F")
         this.addText(`You gathered ${newWood} wood and ${newFood} food.`);
     }
 
@@ -187,10 +208,10 @@ class MainPage extends Component {
 
     updateRessources = () =>{
         let time = parseInt((new Date() - this.state.lastWork)/1000)
-        this.setState({
-            wood:this.state.wood + this.state.WW*time,
-            food:this.state.food + this.state.FW*time
-        })
+
+        this.addRes(this.state.WW*time,"W")
+        this.addRes(this.state.FW*time-parseInt(this.state.population*time/5),"F")
+
     }
 
     startFire = () => {
@@ -199,11 +220,15 @@ class MainPage extends Component {
             this.setState({
                 wood:this.state.wood-5,
                 fire:true,
+                E:true
+
             });
             this.addText('You successfully started a fire. This should keep away the beasts for now.')
         }
         
     } 
+
+    
 
     upgradeSword = () => {
         if(this.state.wood>=this.swordsNextRequirements[this.state.swordIndex]){
@@ -274,8 +299,15 @@ class MainPage extends Component {
         }
       }
 
+      hunger = () =>{
+        console.log("ruinning")
+        this.setState({
+            food:this.state.food-this.state.population
+        })
+    }
+
       
-  render () {
+    render () {
 
       return <body className="Background-Body">
 
@@ -296,7 +328,7 @@ class MainPage extends Component {
       { this.state.fade ? (<div className="fade"></div>) : null }
       { !this.state.alive ? (<Navigate to="/GameOver"/>) : null }
 
-      <div className="NT">Nomadic Tribe</div>
+      <div className="NT">Nomadic Tribe </div>
       
       
       <div>
@@ -312,10 +344,10 @@ class MainPage extends Component {
               
               </div>}
             {this.state.activeTab === 2 && <div className="tab" id="secondTab">
-                <RessourceCounter updateRessources={this.updateRessources} addRessources={this.addRessources} lastWorking={this.lastWorking} population={this.state.population} WW ={this.state.WW} FW={this.state.FW} maxPopulation={this.state.maxPopulation} food={this.state.food} wood={this.state.wood} startFire = {this.startFire} addW={this.addW} fire = {this.state.fire} upgradeSword = {this.upgradeSword} swordInfo = {[this.state.swordIndex, this.swordsNextRequirements[this.state.swordIndex], this.swords[this.state.swordIndex]]}></RessourceCounter>
+                <RessourceCounter hunger={this.hunger} updateRessources={this.updateRessources} addRessources={this.addRessources} lastWorking={this.lastWorking} population={this.state.population} WW ={this.state.WW} FW={this.state.FW} maxPopulation={this.state.maxPopulation} food={this.state.food} wood={this.state.wood} startFire = {this.startFire} addW={this.addW} fire = {this.state.fire} upgradeSword = {this.upgradeSword} swordInfo = {[this.state.swordIndex, this.swordsNextRequirements[this.state.swordIndex], this.swords[this.state.swordIndex]] } ></RessourceCounter>
               </div>}
             {this.state.activeTab === 3 && <div className="tab" id="thirdTab"> 
-            <div>  <MoreButtons state = {this.state}></MoreButtons> </div>
+            <div>  <MoreButtons buttonsInfo = {[this.state.E, this.state.TT,this.state.O,this.state.C,this.state.MC]} swordIndex = {this.state.swordIndex} ></MoreButtons> </div>
               
               </div>}
       </div>
@@ -331,3 +363,6 @@ class MainPage extends Component {
 }
 
 export default MainPage;
+
+
+//<button onClick={() => {window.localStorage.clear()}}> Clear </button>

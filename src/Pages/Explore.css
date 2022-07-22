@@ -25,7 +25,6 @@
     width: 50%;
     left: 0;
     top: 0;
-    border: 1px green solid;
     text-align: left;
 }
 
@@ -35,43 +34,23 @@
     width: 50%;
     right: 0;
     top:0;
-    border: 1px orange solid;
     text-align: right;
 }
 
-.Character{
-    position: absolute;
-    left:0;
-    width: 100px;
-    height: 200px;
-    background:aqua; 
-    animation: Attack 1.5s ease;
-    animation-delay: 0.75s; 
-}
+
+
 
 @keyframes Attack {
     0%{left: 0;}
-    50%{left: 0;}
-    75%{left: 100px;}
+    60%{left: 100px;}
     100%{left: 0;}
 }
 
 @keyframes EAttack {
     0%{right: 0;}
-    50%{right: 0;}
-    75%{right: 100px;}
+    60%{right: 100px;}
     100%{right: 0;}
 }
-
-.ECharacter{
-    width: 100px;
-    height: 200px;
-    background:aqua;  
-    position: absolute;
-    right: 0;
-
-    
-} 
 
 .E{
     position: absolute;
@@ -98,3 +77,37 @@
 
 
 
+.Butt{
+    position: absolute;
+    background-color: white;
+    z-index: 100;
+    top: 390px;
+}
+
+.high{
+    position: absolute;
+    z-index: 100;
+    border:1px solid white;
+    padding:20px;
+    top:50%;
+    left:50%;
+    transform:translate(-50%);
+}
+
+.ressourceGathered{
+    position: absolute;
+    z-index: 100;
+
+    padding:20px;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,60px);
+}
+
+.homeButton{
+    position: absolute;
+    z-index: 100;
+    top:50%;
+    left:50%;
+    transform:translate(-55%,110px);
+}

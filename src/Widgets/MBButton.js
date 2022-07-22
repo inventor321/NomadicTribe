@@ -9,10 +9,9 @@ export default function Redirect(props) {
     function handleClick() {
       navigate(props.pageURL)
     }
-    let cssClass = "more ".concat(props.cssing)
     return (
       <div>
-        <button class={cssClass} onClick={handleClick}><div class="text" >{props.text}</div></button>
+        <button className={props.cssing} onClick={handleClick}><div className="text" >{props.text}</div></button>
       </div>
     );
   }
