@@ -1,11 +1,9 @@
 import { BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import ErrorPage from "./Pages/ErrorPage";
-import Home from "./Pages/Home";
 import MagicRuins from "./Pages/MagicRuins";
 import MainPage from "./Pages/MainPage";
 import GameOver from "./Pages/GameOver";
 import Explore from "./Pages/Explore";
-import RessourceCounter from "./Widgets/RessourceCounter";
 import TechTree from "./Pages/TechTree";
 
 

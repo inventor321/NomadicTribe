@@ -15,8 +15,8 @@ class Explore extends Component {
     this.entities = ["Rat", "Mischief", "Huge Rat", "Wolf","A Pack", "Cub", "Mama Bear"]
     this.entitiesHP = [5, 15, 20, 22, 44, 50, 100]
     this.entitiesDMG = [1, 3, 5, 7, 21, 20, 50]
-    this.entitiesSPD = [2, 1, 2, 1.5, 0.75, 4, 3]
-    this.eFood = [3,7,10,15,40,60,150]
+    this.entitiesSPD = [2, 2, 2, 1.5, 1, 4, 3]
+    this.eFood = [1,3,7,10,15,40,60,150]
     this.componentCleanup = this.componentCleanup.bind(this);
         
   }
@@ -34,12 +34,11 @@ class Explore extends Component {
 
   componentDidMount(){
     window.addEventListener('beforeunload', this.componentCleanup);
-    let index = Math.floor(Math.random() * this.state.explorations/5);
+    let index = Math.floor(Math.random() * this.state.exploredm2/20);
     this.setState({
       resultBox:{
         display:"none"
       },
-
       currentHP:20,
       maxHP:20,
       attackSPD:2,
@@ -49,7 +48,8 @@ class Explore extends Component {
       emaxHP:this.entitiesHP[index],
       eattackDMG:this.entitiesDMG[index],
       eattackSPD:this.entitiesSPD[index],
-      eFood:this.eFood[index],
+      eFood:Math.floor(Math.random() * this.eFood[index+1])+this.eFood[index],
+      victory:false,
 
       AttackCSS:{
         position: "absolute",
@@ -86,8 +86,8 @@ class Explore extends Component {
       })
       if(this.state.currentHP-this.state.eattackDMG<=0){
         setTimeout(()=>{
-          console.log("clearing")
-          this.stopFight()
+          window.localStorage.setItem('Loot',JSON.stringify([0,1,0]));
+          this.stopFight(false)
         },this.state.eattackSPD*500)
           
         
@@ -99,8 +99,8 @@ class Explore extends Component {
           
       if(this.state.currentHP-this.state.eattackDMG<=0){
         setTimeout(()=>{
-          console.log("clearing")
-          this.stopFight()
+          window.localStorage.setItem('Loot',JSON.stringify([0,1,0]));
+          this.stopFight(false)
         },this.state.eattackSPD*500)
           
         
@@ -134,7 +134,7 @@ class Explore extends Component {
     
   }
 
-  stopFight(){
+  stopFight(victory){
     clearInterval(this.eAttacker)
     clearTimeout(this.enableAttack)
     this.setState({
@@ -148,6 +148,12 @@ class Explore extends Component {
       AttackButtonDisabled:true,
       
     });
+
+    if(victory){
+      this.setState({
+        victory:true,
+      })
+    }
 
     this.fightResult()
     
@@ -168,14 +174,15 @@ class Explore extends Component {
     })
 
     
-    
+     
     setTimeout(()=>
       {
       this.setState({
         ecurrentHP:this.state.ecurrentHP-this.attackDMG[this.state.swordIndex],
       })
       if(this.state.ecurrentHP-this.attackDMG[this.state.swordIndex]<=0){
-        this.stopFight()
+        window.localStorage.setItem('Loot',JSON.stringify([this.state.eFood,0,5]));
+        this.stopFight(true)
       }
     
     },
@@ -212,9 +219,14 @@ class Explore extends Component {
         
 
         <h1 className="area">Forest</h1>
+        
         <div style={this.state.resultBox}>
-          <div className="high" > You have won!</div>
-          <div className="ressourceGathered">You gathered {this.state.eFood} food from your battle</div>
+        {this.state.victory && <div><div className="high" > You have won the battle!</div>
+          <div className="ressourceGathered">You gathered {this.state.eFood} food from your battle</div></div>}
+
+        {!this.state.victory && <div><div className="high" > You have lost the battle!</div>
+          <div className="ressourceGathered">You have lost a fellow bretheren</div></div>}
+          
           <Redirect pageURL="/NomadicTribe" text=" Go Back Home " cssing ={"more homeButton"}></Redirect>
         </div>
 

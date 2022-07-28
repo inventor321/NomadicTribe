@@ -48,7 +48,7 @@ export default class CooldownButton extends Component{
     render = () => {
 
             var time = this.getTimeRemaining();
-            if(performance.navigation.type==1){
+            if(performance.navigation.type===1){
                 this.startGatherer()
             }
             if(time<0 & this.props.gatherState){

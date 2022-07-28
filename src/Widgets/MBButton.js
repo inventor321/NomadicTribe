@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 
 
@@ -7,7 +7,11 @@ import { useNavigate } from "react-router-dom";
 export default function Redirect(props) {
     let navigate = useNavigate();
     function handleClick() {
-      navigate(props.pageURL)
+      if(props.saveState!=null){
+        props.saveState()
+      }
+      setTimeout(()=>{navigate(props.pageURL)},50)
+      
     }
     return (
       <div>

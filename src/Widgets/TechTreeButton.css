@@ -1,0 +1,99 @@
+/*       Just setting CSS for the page   */
+
+* {
+    margin: 0;
+    padding: 0;
+  }
+  
+  html,
+  css {
+    width: 100%;
+    height: 100%;
+  }
+  
+  .svg-wrapper {
+    margin-top: 0;
+    position: absolute;
+    width: 150px;
+    height: 40px;
+    display: inline-block;
+    border-radius: 3px;
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+
+  .svgg{
+    display: inline-block;
+    }
+
+  #goodShape {
+    position: absolute;
+    z-index: -1;
+    width: 150px;
+    height: 40px;
+    stroke-width: 5px;
+    fill: transparent;
+    stroke: #009FFD;
+    stroke-dasharray: 85 400;
+    stroke-dashoffset: -220;
+    transition: 1s all ease;
+  }
+
+
+  #badShape {
+    position: absolute;
+    z-index: -1;
+    width: 150px;
+    height: 40px;
+    stroke-width: 5px;
+    fill: transparent;
+    stroke: #009FFD;
+    stroke-dasharray: 85 400;
+    stroke-dashoffset: -220;
+    transition: 1s all ease;
+  }
+  
+  #text {
+    position: absolute;
+    top:50%;
+    left: 50%;
+    text-align: center;
+    transform: translate(-50%,-50%);
+    color: white;
+    text-decoration: none;
+    font-weight: 100;
+    font-size: 1.1em;
+    max-lines: 1;
+    white-space:nowrap;
+  }
+  
+  
+  .svg-wrapper:hover #goodShape {
+    stroke-dasharray: 50 0;
+    stroke-width: 3px;
+    stroke-dashoffset: 0;
+    stroke: #06D6A0;
+  }
+
+  .svg-wrapper:hover #badShape {
+    stroke-dasharray: 50 0;
+    stroke-width: 3px;
+    stroke-dashoffset: 0;
+    stroke: red;
+  }
+
+.popup{
+    position: absolute;
+    left: 150px;
+    top: 0px;
+    width: 250px;
+    background-color: grey;
+    padding: 5px;
+    opacity: 1;
+    display: none;
+}
+
+.svg-wrapper:hover .popup {
+    display: block;
+  }
+

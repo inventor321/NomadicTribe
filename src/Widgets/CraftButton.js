@@ -3,13 +3,6 @@ import './CraftButton.css';
 
 export default class CraftButton extends Component{
     
-    constructor(props){
-        super(props);
-    }
-
-    
-    
-
     render = () =>{ 
         return(
 

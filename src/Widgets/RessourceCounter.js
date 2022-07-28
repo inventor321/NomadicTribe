@@ -4,17 +4,11 @@ import Campfire from './Campfire';
 import CraftButton from "./CraftButton";
 
 export default class RessourceCounter extends Component{
-    
-    constructor(props){
-        super(props);
-    }
 
     componentDidMount() {
         this.props.updateRessources()
-        this.FWorkers = setInterval(()=>{
+        this.Workers = setInterval(()=>{
             this.props.addRessources('W')
-        }, 1000);
-        this.WWorkers = setInterval(()=>{
             this.props.addRessources('F')
         }, 1000);
 
@@ -23,8 +17,7 @@ export default class RessourceCounter extends Component{
     }
     
     componentWillUnmount() { 
-        clearInterval(this.FWorkers);
-        clearInterval(this.WWorkers);
+        clearInterval(this.Workers);
         clearInterval(this.hunger);
         this.props.lastWorking(new Date());
     }

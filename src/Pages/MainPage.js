@@ -1,15 +1,10 @@
-import React, { Component, memo } from "react";
-import { Link, Navigate } from "react-router-dom";
+import React, { Component } from "react";
+import { Navigate } from "react-router-dom";
 import CooldownButton from "../Widgets/CooldownButton";
 import RessourceCounter from "../Widgets/RessourceCounter";
 import './MainPage.css';
-import {timer, intervalTimer} from "../TimerFunction.js";
 import MoreButtons from "../Widgets/MoreButtons";
 import Home from "./Home";
-
-var firstMessage = ['You wake up in the middle of a forest']
-
-
 
 class MainPage extends Component {
 
@@ -52,7 +47,7 @@ class MainPage extends Component {
                 ocean:false,
                 magicRuins:false,
                 
-                gatherTime:new Date((new Date).getTime() - 10*1000),
+                gatherTime: new Date((new Date()).getTime() - 10*1000),
                 
     
                 fire:false,
@@ -63,7 +58,9 @@ class MainPage extends Component {
                 O:false,
                 MC:false,
 
-                explorations:0,
+                exploredm2:0,
+
+                technologyAvailable:[true,false,false,false,false]
     
             }
         }
@@ -85,16 +82,41 @@ class MainPage extends Component {
 
     componentWillUnmount() {
         this.componentCleanup()
-        window.removeEventListener('beforeunload', this.componentCleanup); // remove the event handler for normal unmounting
+        window.removeEventListener('beforeunload', this.componentCleanup);
     }
 
     updateDates(){
-        this.setState({
-            gatherTime:new Date(Date.parse(this.state.gatherTime)),
-            lastWork:new Date(Date.parse(this.state.lastWork)),
-            wood:parseInt(this.state.wood),
-            food:parseInt(this.state.food)
-        })
+        clearTimeout(this.ud)
+        this.ud=setTimeout(()=>{
+        let Loot = JSON.parse(window.localStorage.getItem('Loot'))
+        
+        if(Loot!=null){
+            console.log(Loot,"loot! ", Loot[0],Loot[1])
+            this.setState({
+                gatherTime:new Date(Date.parse(this.state.gatherTime)),
+                lastWork:new Date(Date.parse(this.state.lastWork)),
+                wood:parseInt(this.state.wood),
+                food:parseInt(this.state.food)+parseInt(Loot[0]),
+                population:this.state.population-parseInt(Loot[1]),
+                exploredm2:this.state.exploredm2+parseInt(Loot[2]),
+            })
+            this.delLoot()
+        }else{
+            this.setState({
+                gatherTime:new Date(Date.parse(this.state.gatherTime)),
+                lastWork:new Date(Date.parse(this.state.lastWork)),
+                wood:parseInt(this.state.wood),
+                food:parseInt(this.state.food),
+            })
+        }
+        window.localStorage.removeItem("Loot")
+    },50)
+
+        
+    }
+
+    delLoot(){
+        window.localStorage.removeItem("Loot")
     }
 
     enable = () =>{
@@ -125,6 +147,7 @@ class MainPage extends Component {
             fade:true,
         });
         setTimeout(() => {
+            window.localStorage.setItem("Death", "You were not able to keep your fire going. The creatures of the forest took you out.")
             this.setState({
                 alive:false,
             });
@@ -153,11 +176,6 @@ class MainPage extends Component {
         }else if(type==='F'){
             this.setState({
                 food:this.state.food+amount
-            })
-        }
-        if(this.state.wood>100){
-            this.setState({
-                TT:true,
             })
         }
 
@@ -193,11 +211,17 @@ class MainPage extends Component {
 
 
 
-        let newWood = this.getRandomInt(10);
-        let newFood = this.getRandomInt(10);
+        let newWood = this.getRandomInt(1000);
+        let newFood = this.getRandomInt(1000);
         this.addRes(newWood,"W")
         this.addRes(newFood,"F")
         this.addText(`You gathered ${newWood} wood and ${newFood} food.`);
+
+        if(this.state.wood + newWood>50){
+            this.setState({
+                TT:true,
+            })
+        }
     }
 
     lastWorking = date =>{
@@ -236,7 +260,6 @@ class MainPage extends Component {
                 wood:this.state.wood-this.swordsNextRequirements[this.state.swordIndex],
                 swordIndex:this.state.swordIndex+1,
             });
-            this.addText('You upgraded your sword!')
         }
         
     }
@@ -257,7 +280,7 @@ class MainPage extends Component {
         
 
         setTimeout(()=>{
-            this.addText("You should start a fire to keep yourself safe")
+            this.addText("You should start a fire to keep yourself safe.")
             this.setState({
                 startAnimation:false
             })
@@ -300,7 +323,6 @@ class MainPage extends Component {
       }
 
       hunger = () =>{
-        console.log("ruinning")
         this.setState({
             food:this.state.food-this.state.population
         })
@@ -337,7 +359,7 @@ class MainPage extends Component {
       <button className="Tab-button" id="secondTabButton" onClick={()=>this.changeActiveTab(2)}>Base</button>
       <button className="Tab-button" id="thirdTabButton" onClick={()=>this.changeActiveTab(3)}>More</button>
       </div>
-      <div>
+      <div className="tabContainer">
             {this.state.activeTab === 1 && <div className="tab" id="firstTab">
                 <CooldownButton onGather = {this.gather} enable={this.enable}  gatherState ={this.state.gatherState} gatherTime = {this.state.gatherTime}/>
             
@@ -347,10 +369,15 @@ class MainPage extends Component {
                 <RessourceCounter hunger={this.hunger} updateRessources={this.updateRessources} addRessources={this.addRessources} lastWorking={this.lastWorking} population={this.state.population} WW ={this.state.WW} FW={this.state.FW} maxPopulation={this.state.maxPopulation} food={this.state.food} wood={this.state.wood} startFire = {this.startFire} addW={this.addW} fire = {this.state.fire} upgradeSword = {this.upgradeSword} swordInfo = {[this.state.swordIndex, this.swordsNextRequirements[this.state.swordIndex], this.swords[this.state.swordIndex]] } ></RessourceCounter>
               </div>}
             {this.state.activeTab === 3 && <div className="tab" id="thirdTab"> 
-            <div>  <MoreButtons buttonsInfo = {[this.state.E, this.state.TT,this.state.O,this.state.C,this.state.MC]} swordIndex = {this.state.swordIndex} ></MoreButtons> </div>
+            <div>  <MoreButtons saveState={()=>{window.localStorage.setItem('state',JSON.stringify(this.state))}} buttonsInfo = {[this.state.E, this.state.TT,this.state.O,this.state.C,this.state.MC]} swordIndex = {this.state.swordIndex} ></MoreButtons> </div>
               
               </div>}
+              
+            <div className="explored">
+                You have explored {this.state.exploredm2} m<sup>2</sup> ({(this.state.exploredm2/510100000000000).toFixed(2)}%)
+            </div>
       </div>
+      
         </div>
       
 

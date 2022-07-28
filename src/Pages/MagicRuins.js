@@ -1,5 +1,4 @@
 import React from "react";
-import Tabs from "../Widgets/Tabs";
 import './MagicRuins.css'
 
 function MagicRuins() {

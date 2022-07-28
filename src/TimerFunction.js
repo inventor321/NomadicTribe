@@ -1,4 +1,4 @@
-
+/*
 export function timer(callback, delay) {
         var id, started, remaining = delay, running
 
@@ -53,4 +53,4 @@ export function timer(callback, delay) {
         }
 
         this.start()
-    };
+    };*/
