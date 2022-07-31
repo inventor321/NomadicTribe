@@ -1,5 +1,6 @@
 .restart{
     color: white;
+    background-color: transparent;
     padding: 10px;
     text-decoration: none;
     border: 1px solid white;
@@ -18,4 +19,3 @@
     color: black;
     font-size: 18px;
 }
-

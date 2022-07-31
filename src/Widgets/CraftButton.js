@@ -2,11 +2,11 @@ import React, { Component } from "react";
 import './CraftButton.css';
 
 export default class CraftButton extends Component{
-    
+
     render = () =>{ 
         return(
-
-        <div className="cta-container sword">
+        
+        <div className= {"cta-container "+this.props.class}>
             <div className="button">
                 <div className="square-front">
                 <div className="relative-box">
@@ -16,11 +16,12 @@ export default class CraftButton extends Component{
                     <span className="line line-left"></span>
                 </div>
                 </div>
-                <button className="label" onClick={this.props.upgradeSword}> {this.props.swordInfo[2]} </button>  
+                <button className="label" onClick={this.props.upgradeFunction}> {this.props.name} </button>  
                 
             </div>
             <div className="resNeeded" >
-            {this.props.swordInfo[1]} Wood
+            { this.props.prices[0]>0 && <div> {this.props.prices[0]} Food </div>}
+            { this.props.prices[1]>0 && <div> {this.props.prices[1]} Wood </div>}
             </div>
         </div>
        

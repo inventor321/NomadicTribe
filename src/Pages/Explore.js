@@ -14,8 +14,8 @@ class Explore extends Component {
     
     this.entities = ["Rat", "Mischief", "Huge Rat", "Wolf","A Pack", "Cub", "Mama Bear"]
     this.entitiesHP = [5, 15, 20, 22, 44, 50, 100]
-    this.entitiesDMG = [1, 3, 5, 7, 21, 20, 50]
-    this.entitiesSPD = [2, 2, 2, 1.5, 1, 4, 3]
+    this.entitiesDMG = [1, 3, 5, 7, 9, 20, 50]
+    this.entitiesSPD = [2, 2, 2, 1.5, 1, 2, 3]
     this.eFood = [1,3,7,10,15,40,60,150]
     this.componentCleanup = this.componentCleanup.bind(this);
         
@@ -227,7 +227,7 @@ class Explore extends Component {
         {!this.state.victory && <div><div className="high" > You have lost the battle!</div>
           <div className="ressourceGathered">You have lost a fellow bretheren</div></div>}
           
-          <Redirect pageURL="/NomadicTribe" text=" Go Back Home " cssing ={"more homeButton"}></Redirect>
+          <Redirect pageURL="/NomadicTribe" text=" Go Back Home " cssing ={"more homeButton"} textCssing="text"></Redirect>
         </div>
 
         <div className="mainbackground">

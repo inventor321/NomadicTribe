@@ -31,6 +31,8 @@ class MainPage extends Component {
                 activeTab:1,
     
                 gatherState:false,
+                gatherDiff:5,
+                gatherMin:0,
     
                 population:1,
                 maxPopulation:1,
@@ -43,6 +45,7 @@ class MainPage extends Component {
     
                 food:10,
                 wood:10,
+                huts:0,
                 cave:false,
                 ocean:false,
                 magicRuins:false,
@@ -60,7 +63,10 @@ class MainPage extends Component {
 
                 exploredm2:0,
 
-                technologyAvailable:[true,false,false,false,false]
+                technologyAvailable:[true,false,false,false,false],
+                pouchAcquired:false,
+                
+
     
             }
         }
@@ -91,6 +97,12 @@ class MainPage extends Component {
         let Loot = JSON.parse(window.localStorage.getItem('Loot'))
         
         if(Loot!=null){
+            if(this.state.population-Loot[1]<1){
+                window.localStorage.setItem("Death", "You ran out of people from your village. You are no longer. ")
+                this.setState({
+                    alive:false
+                })
+            }
             console.log(Loot,"loot! ", Loot[0],Loot[1])
             this.setState({
                 gatherTime:new Date(Date.parse(this.state.gatherTime)),
@@ -156,8 +168,8 @@ class MainPage extends Component {
     }
 
 
-    getRandomInt = max => {
-        return Math.floor(Math.random() * max);
+    getRandomInt = (max,min) => {
+        return Math.floor(Math.random() * max) + min;
         
     }
 
@@ -210,12 +222,12 @@ class MainPage extends Component {
         
 
 
-
-        let newWood = this.getRandomInt(1000);
-        let newFood = this.getRandomInt(1000);
+        console.log(this.state.gatherMin,this.state.gatherDiff)
+        let newWood = this.getRandomInt(this.state.gatherDiff,this.state.gatherMin);
+        let newFood = this.getRandomInt(this.state.gatherDiff,this.state.gatherMin);
         this.addRes(newWood,"W")
         this.addRes(newFood,"F")
-        this.addText(`You gathered ${newWood} wood and ${newFood} food.`);
+        this.addText(`You gathered ${newWood} wood and ${newFood} food. `);
 
         if(this.state.wood + newWood>50){
             this.setState({
@@ -247,7 +259,11 @@ class MainPage extends Component {
                 E:true
 
             });
-            this.addText('You successfully started a fire. This should keep away the beasts for now.')
+            this.addText('You successfully started a fire. This should keep away the beasts for now. ')
+        }else if(this.state.wood>=5 && this.state.fire){
+            this.setState({
+                wood:this.state.wood-5,
+            });
         }
         
     } 
@@ -280,7 +296,7 @@ class MainPage extends Component {
         
 
         setTimeout(()=>{
-            this.addText("You should start a fire to keep yourself safe.")
+            this.addText("You should start a fire to keep yourself safe. ")
             this.setState({
                 startAnimation:false
             })
@@ -328,6 +344,31 @@ class MainPage extends Component {
         })
     }
 
+    hut = () =>{
+        this.setState({
+            wood:this.state.wood-(50*(2+this.state.huts)),
+            food:this.state.food-(10*(2+this.state.huts)),
+            huts:this.state.huts+1,
+            maxPopulation:1+(this.state.huts+1)*2
+        })
+    }
+
+    pouch = () =>{
+        this.setState({
+            wood:this.state.wood-20,
+            food:this.state.food-20,
+            gatherDiff:10,
+            gatherMin:10,
+            pouchAcquired:true, 
+        })
+    }
+
+    addPop = () =>{
+        this.setState({
+            population:this.state.population+1
+        })
+    }
+
       
     render () {
 
@@ -350,12 +391,12 @@ class MainPage extends Component {
       { this.state.fade ? (<div className="fade"></div>) : null }
       { !this.state.alive ? (<Navigate to="/GameOver"/>) : null }
 
-      <div className="NT">Nomadic Tribe </div>
+      <div className="NT">Nomadic Tribe <button onClick={() => {window.localStorage.clear()}}> Clear </button></div>
       
       
       <div>
           <div className="Tab_button_container">
-      <button className="Tab-button" id="firstTabButton" onClick={()=>this.changeActiveTab(1)}>Surroundings</button>
+      <button className="Tab-button " id="firstTabButton" onClick={()=>this.changeActiveTab(1)}>Surroundings</button>
       <button className="Tab-button" id="secondTabButton" onClick={()=>this.changeActiveTab(2)}>Base</button>
       <button className="Tab-button" id="thirdTabButton" onClick={()=>this.changeActiveTab(3)}>More</button>
       </div>
@@ -366,7 +407,7 @@ class MainPage extends Component {
               
               </div>}
             {this.state.activeTab === 2 && <div className="tab" id="secondTab">
-                <RessourceCounter hunger={this.hunger} updateRessources={this.updateRessources} addRessources={this.addRessources} lastWorking={this.lastWorking} population={this.state.population} WW ={this.state.WW} FW={this.state.FW} maxPopulation={this.state.maxPopulation} food={this.state.food} wood={this.state.wood} startFire = {this.startFire} addW={this.addW} fire = {this.state.fire} upgradeSword = {this.upgradeSword} swordInfo = {[this.state.swordIndex, this.swordsNextRequirements[this.state.swordIndex], this.swords[this.state.swordIndex]] } ></RessourceCounter>
+                <RessourceCounter addPop ={this.addPop} pouch={this.pouch} hut={this.hut} hunger={this.hunger} updateRessources={this.updateRessources} addRessources={this.addRessources} lastWorking={this.lastWorking} upgradeSword = {this.upgradeSword} startFire = {this.startFire} addW={this.addW} huts = {this.state.huts} population={this.state.population} WW ={this.state.WW} FW={this.state.FW} maxPopulation={this.state.maxPopulation} food={this.state.food} wood={this.state.wood}  fire = {this.state.fire}  technologyAvailable={this.state.technologyAvailable} pouchAcquired={this.state.pouchAcquired} swordInfo = {[this.state.swordIndex, 0 , this.swordsNextRequirements[this.state.swordIndex], this.swords[this.state.swordIndex]] } ></RessourceCounter>
               </div>}
             {this.state.activeTab === 3 && <div className="tab" id="thirdTab"> 
             <div>  <MoreButtons saveState={()=>{window.localStorage.setItem('state',JSON.stringify(this.state))}} buttonsInfo = {[this.state.E, this.state.TT,this.state.O,this.state.C,this.state.MC]} swordIndex = {this.state.swordIndex} ></MoreButtons> </div>

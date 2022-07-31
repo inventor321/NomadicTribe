@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import './MBButton.css';
 
 
 
@@ -15,7 +16,7 @@ export default function Redirect(props) {
     }
     return (
       <div>
-        <button className={props.cssing} onClick={handleClick}><div className="text" >{props.text}</div></button>
+        <button className={props.cssing} onClick={handleClick}><div className={props.textCssing}>{props.text}</div></button>
       </div>
     );
   }

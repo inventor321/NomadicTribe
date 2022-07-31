@@ -46,6 +46,15 @@
     top:120px
     
 }
+
+.hutt{
+    top: 180px;
+
+}
+
+.pouchh{
+    top:240px
+}
   
 
 .label {
@@ -210,3 +219,17 @@
     left: 100px;
     width: fit-content;
 }
+
+.changeBTN{
+    padding-left:2px ;
+    padding-right:2px ;
+    background-color: transparent;
+    color:white;
+    font-size: larger;
+    border: none;
+}
+
+.changeBTN:hover{
+    cursor: pointer;
+}
+

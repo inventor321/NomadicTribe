@@ -5,12 +5,16 @@ import CraftButton from "./CraftButton";
 
 export default class RessourceCounter extends Component{
 
+
     componentDidMount() {
+        
         this.props.updateRessources()
         this.Workers = setInterval(()=>{
             this.props.addRessources('W')
             this.props.addRessources('F')
+            this.addPop()
         }, 1000);
+        this.timeForNewWorker = 20
 
         //this.hunger = setInterval(()=>{this.props.hunger()},5000)
         
@@ -22,6 +26,16 @@ export default class RessourceCounter extends Component{
         this.props.lastWorking(new Date());
     }
 
+    addPop = () => {
+        if(this.timeForNewWorker>0){
+            this.timeForNewWorker = this.timeForNewWorker-1
+        }else{
+            this.timeForNewWorker = 20
+            this.props.addPop()
+        }
+        
+    }
+
     startFire = event => {
         this.props.startFire();
     };
@@ -30,7 +44,19 @@ export default class RessourceCounter extends Component{
         this.props.addW(addsub, type);
     }
 
-    
+    hut = () =>{
+        if(this.props.wood>=(50*(2+this.props.huts)) & this.props.food >=(10*(2+this.props.huts))){
+            this.props.hut();
+        }
+        
+
+    }
+
+    pouch = () =>{
+        if(this.props.wood>=20 & this.props.food >=20){
+            this.props.pouch();
+        }
+    }
 
     render = () =>{ 
         return(
@@ -40,11 +66,12 @@ export default class RessourceCounter extends Component{
                 <div className="Population"> Population : {this.props.population}/{this.props.maxPopulation} </div> 
                 <div className="Food">Food : {this.props.food} </div>
                 <div className="Wood">Wood : {this.props.wood} </div>
+                {this.props.technologyAvailable[3] && <div className="Wood">Huts : {this.props.huts} </div> }
             </div>
             <div className="workerContainer">
                 <div className="workers"> {this.props.population-1} Workers </div>
-                <div className="workers"> <button onClick={() => this.addW(true,'F')}>+</button> {this.props.FW} <button onClick={() =>this.addW(false,'F')}>-</button> </div>
-                <div className="workers"> <button onClick={() =>this.addW(true,'W')}>+</button> {this.props.WW} <button onClick={() =>this.addW(false,'W')}>-</button> </div>
+                <div className="workers"> <button className="changeBTN" onClick={() => this.addW(true,'F')}>+</button> {this.props.FW} <button className="changeBTN" onClick={() =>this.addW(false,'F')}>-</button> </div>
+                <div className="workers"> <button className="changeBTN" onClick={() =>this.addW(true,'W')}>+</button> {this.props.WW} <button className="changeBTN" onClick={() =>this.addW(false,'W')}>-</button> </div>
             </div>
             {this.props.fire && <Campfire></Campfire>}
 
@@ -53,34 +80,17 @@ export default class RessourceCounter extends Component{
 
                     <h1 id="shop"> Craft </h1>
 
-
-                    <div className="cta-container campfire">
-                        <div className="button">
-                            <div className="square-front">
-                            <div className="relative-box">
-                                <span className="line line-top"></span>
-                                <span className="line line-right"></span>
-                                <span className="line line-bottom"></span>
-                                <span className="line line-left"></span>
-                            </div>
-                            </div>
-                            {!this.props.fire && <button className="label" onClick={this.startFire} > Start Fire </button>}
-                            {this.props.fire && <button className="label" onClick={this.startFire} > Add Wood </button>}
-                              
-                            
-                        </div>
-                        <div className="resNeeded" >
-                            5 Wood
-                        </div>
-                    </div>
  
+                    {!this.props.fire && <CraftButton prices={[0,5]} name={" Start Fire "} upgradeFunction ={this.startFire} class={"campfire"}/>}
+                    {this.props.fire && <CraftButton prices={[0,5]} name={" Add Wood "} upgradeFunction ={this.startFire} class={"campfire"}/>}
+                    {(this.props.technologyAvailable[2] && !this.props.pouchAcquired) && <CraftButton prices={[20,20]} name={"Pouch"} upgradeFunction ={this.pouch} class={"pouchh"}/>}
+                    {(this.props.technologyAvailable[3]) && <CraftButton prices={[(10*(2+this.props.huts)),(50*(2+this.props.huts))]} name={"Hut"} upgradeFunction ={this.hut} class={"hutt"}/>}
+                    {(this.props.technologyAvailable[4] && this.props.swordInfo[0]<6) && <CraftButton prices={[this.props.swordInfo[1],this.props.swordInfo[2]]} name={this.props.swordInfo[3]} upgradeFunction ={this.props.upgradeSword} class={"sword"}/>}
+                   
 
-                    {this.props.swordInfo[0]>6 &&<CraftButton swordInfo ={this.props.swordInfo} upgradeSword ={this.props.upgradeSword}/>}
 
                     
-
-                    
-                </div>
+                </div> 
             </div>
         </div>
        

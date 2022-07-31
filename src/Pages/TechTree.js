@@ -80,12 +80,27 @@ export default class TechTree extends Component {
       wood:this.state.wood-wood
     })
     this.setShapes()
+    console.log(index)
+    if(index===1){
+      this.improvedMemory()
+    }
   
   }
 
   saveState =() =>{
     window.localStorage.setItem('state',JSON.stringify(this.state));
   }
+
+
+  improvedMemory = () => {
+    this.setState({
+      gatherMin:5,
+    })
+    setTimeout(()=>{console.log(this.state.gatherMin);this.saveState()},50)
+  }
+
+  
+
 
   render () {
     return <body > 
@@ -104,7 +119,7 @@ export default class TechTree extends Component {
 
     </div>
 
-    <Redirect saveState={this.saveState} pageURL="/NomadicTribe" text=" Back to Base " cssing ={"more home"}></Redirect>
+    <Redirect saveState={this.saveState} pageURL="/NomadicTribe" text=" Back to Base " cssing ={"more home"} textCssing="none"></Redirect>
 
 
   </body>;
