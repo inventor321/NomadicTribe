@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/NomadicTribe/static/css/main.11ea8a04.css",
-    "main.js": "/NomadicTribe/static/js/main.d99f9ebe.js",
+    "main.css": "/NomadicTribe/static/css/main.9c816d38.css",
+    "main.js": "/NomadicTribe/static/js/main.dda554a1.js",
     "static/js/787.223550ad.chunk.js": "/NomadicTribe/static/js/787.223550ad.chunk.js",
     "index.html": "/NomadicTribe/index.html",
-    "main.11ea8a04.css.map": "/NomadicTribe/static/css/main.11ea8a04.css.map",
-    "main.d99f9ebe.js.map": "/NomadicTribe/static/js/main.d99f9ebe.js.map",
+    "main.9c816d38.css.map": "/NomadicTribe/static/css/main.9c816d38.css.map",
+    "main.dda554a1.js.map": "/NomadicTribe/static/js/main.dda554a1.js.map",
     "787.223550ad.chunk.js.map": "/NomadicTribe/static/js/787.223550ad.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.11ea8a04.css",
-    "static/js/main.d99f9ebe.js"
+    "static/css/main.9c816d38.css",
+    "static/js/main.dda554a1.js"
   ]
 }
