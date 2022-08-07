@@ -3,16 +3,22 @@ import './RessourceCounter.css';
 import Campfire from './Campfire';
 import CraftButton from "./CraftButton";
 
+const swordsNextRequirements = [50,100,200,350,500,1000]
+const swords = ['Wooden Sword', 'Stone Sword', 'Copper Sword', 'Bronze Sword', 'Iron Sword', 'Steel Sword']
+
 export default class RessourceCounter extends Component{
 
-
     componentDidMount() {
-        
+        console.log("RessourceCounter")
         this.props.updateRessources()
+        
+        
         this.Workers = setInterval(()=>{
             this.props.addRessources('W')
             this.props.addRessources('F')
-            this.addPop()
+            if(this.props.huts>this.props.population){
+                this.addPop(1)
+            }
         }, 1000);
         this.timeForNewWorker = 20
 
@@ -25,6 +31,7 @@ export default class RessourceCounter extends Component{
         clearInterval(this.hunger);
         this.props.lastWorking(new Date());
     }
+    
 
     addPop = () => {
         if(this.timeForNewWorker>0){
@@ -85,7 +92,9 @@ export default class RessourceCounter extends Component{
                     {this.props.fire && <CraftButton prices={[0,5]} name={" Add Wood "} upgradeFunction ={this.startFire} class={"campfire"}/>}
                     {(this.props.technologyAvailable[2] && !this.props.pouchAcquired) && <CraftButton prices={[20,20]} name={"Pouch"} upgradeFunction ={this.pouch} class={"pouchh"}/>}
                     {(this.props.technologyAvailable[3]) && <CraftButton prices={[(10*(2+this.props.huts)),(50*(2+this.props.huts))]} name={"Hut"} upgradeFunction ={this.hut} class={"hutt"}/>}
-                    {(this.props.technologyAvailable[4] && this.props.swordInfo[0]<6) && <CraftButton prices={[this.props.swordInfo[1],this.props.swordInfo[2]]} name={this.props.swordInfo[3]} upgradeFunction ={this.props.upgradeSword} class={"sword"}/>}
+                    {(this.props.technologyAvailable[4] && this.props.swordInfo===0) && <CraftButton prices={[0,swordsNextRequirements[this.props.swordInfo]]} name={swords[this.props.swordInfo]} upgradeFunction ={this.props.upgradeSword} class={"sword"}/>}
+                    {(this.props.technologyAvailable[5] && this.props.swordInfo===1) && <CraftButton prices={[0,swordsNextRequirements[this.props.swordInfo]]} name={swords[this.props.swordInfo]} upgradeFunction ={this.props.upgradeSword} class={"sword"}/>}
+                    {(this.props.technologyAvailable[6] && this.props.swordInfo===2) && <CraftButton prices={[0,swordsNextRequirements[this.props.swordInfo]]} name={swords[this.props.swordInfo]} upgradeFunction ={this.props.upgradeSword} class={"sword"}/>}
                    
 
 

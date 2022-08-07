@@ -22,6 +22,8 @@
 
 .techButtons{
     position: absolute;
+    top:0%;
+    left: 0%;
     height: 100%;
     width: 100%;
 }
@@ -31,26 +33,65 @@
     position: absolute;
     top:80%;
     left: 50%;
-    transform: translate(-50%);
+    transform: translate(-75px);
 }
 
 .pouch{
     position: absolute;
     top:70%;
     left: 50%;
-    transform: translate(-50%);
-}
-
-.woodenTools{
-    position: absolute;
-    top:60%;
-    left: 40%;
-    transform: translate(-50%);
+    transform: translate(-75px);
 }
 
 .hut{
     position: absolute;
-    top:60%;
-    left: 60%;
-    transform: translate(-50%);
+    top:70%;
+    left: 50%;
+    transform: translate(25px, -60px);
+}
+
+.woodenTools{
+    position: absolute;
+    top:70%;
+    left: 50%;
+    transform: translate(-175px, -60px);
+}
+
+.stoneTools{
+    position: absolute;
+    top:70%;
+    left: 50%;
+    transform: translate(-250px, -120px);
+}
+
+.copperTools{
+    position: absolute;
+    top:70%;
+    left: 50%;
+    transform: translate(-350px, -180px);
+}
+
+.atlatl{
+    position: absolute;
+    top:70%;
+    left: 50%;
+    transform: translate(-150px, -180px);
+}
+
+.bowAndArrow{
+    position: absolute;
+    top:70%;
+    left: 50%;
+    transform: translate(-150px, -240px);
+}
+
+.cartography{
+    position: absolute;
+    top:70%;
+    left: 50%;
+    transform: translate(100px, -120px);
+}
+
+.notAvailable{
+    background-color: darkgrey;
 }

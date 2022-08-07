@@ -1,0 +1,37 @@
+.adventurePath{
+  width: 50%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-300px);
+  border-bottom: 1px solid white;
+  
+}
+
+@keyframes traverse {
+  0%{left: 0;}
+  100%{left: 99%;}
+}
+
+.playerCharacter{
+  position: relative;
+  line-height: 13px;
+  animation: traverse 10s forwards linear ;
+  width: min-content;
+}
+
+.enemyCharacter{
+  position: absolute;
+  margin: 2px;
+  bottom: 0px;
+  line-height: 13px;
+  width: min-content;
+  transform: translate(10px);
+}
+
+.paused{
+  animation-play-state: paused;
+}
+.red{
+  color:red;
+}

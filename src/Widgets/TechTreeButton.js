@@ -4,10 +4,13 @@ import './TechTreeButton.css'
 
 
 export default function TTButton(props) {
-    
+    let svgWrapper = "svg-wrapper "
+    if(!props.availability){
+        svgWrapper = svgWrapper + "notAvailable"
+    }
 
     function clickHandler(){
-        if(props.shape==="goodShape"){
+        if(props.shape==="goodShape" & props.availability){
             props.upgrade((props.index+1), props.prices[0], props.prices[1])
         }
         
@@ -17,7 +20,7 @@ export default function TTButton(props) {
 
     return (
         <div className={props.tech[1]}>
-            <div class="svg-wrapper " onClick={()=>{clickHandler()}}>
+            <div class={svgWrapper} onClick={()=>{clickHandler()}}>
 
                 
 

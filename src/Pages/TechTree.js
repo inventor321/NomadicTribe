@@ -4,14 +4,22 @@ import TTButton from "../Widgets/TechTreeButton";
 import "./TechTree.css"
 
 
-const technologyNames = [
-  ["Improved Memory","improveMemory","The more you explore, the better you know your surroundings, the faster you find ressources."],
-  ["Pouch","pouch","Allows you to collect more ressources when you go gathering."],
-  ["Huts","hut","Allows you to create huts, which attract people to your community."], 
-  ["Wooden Tools","woodenTools","Allows you to craft better tools for gathering and exploring."]]
+const technologyNames = [ // 0 Name, 1 className, 2 description, 3 tech needed, 4 in game available, 5 food cost, 6 wood cost
+  ["Improved Memory","improveMemory","The more you explore, the better you know your surroundings, the faster you find ressources.",0, true, 10, 20], //1
+  ["Pouch","pouch","Allows you to collect more ressources when you go gathering.",1, true, 50, 10],                           //2
+  ["Huts","hut","Allows you to create huts, which attract people to your community.",2, true, 100,100],                       //3
+  ["Cartography","cartography","Improves your explorations.",3, false, 150, 250],                                             //4
+  ["Wooden Tools","woodenTools","Allows you to craft better tools for gathering and exploring.",2, true, 100, 50],            //5
+  ["Stone Tools","stoneTools","Allows you to craft better tools for gathering and exploring.",5, true, 200, 100],             //6
+  ["Atlatl","atlatl","Allows you to craft a ranged weapon. Adds an attack that you can use in battle.",6, false, 200, 200],   //7
+  ["Bow & Arrow","bowAndArrow","Allows you to craft a better ranged weapon.",7, false, 300, 400],                             //8
+  ["Copper Tools","copperTools","Allows you to craft better tools for gathering and exploring.",6, true, 200, 500],           //9
 
-const woodPrices = [10, 50, 100, 100]
-const foodPrices = [20, 10, 100, 50]
+  
+]
+
+const woodPrices = [10, 50, 100, 100, 200, 500, 200, 300, 300]
+const foodPrices = [20, 10, 100, 50, 100, 200, 200, 400, 300]
 
 
 export default class TechTree extends Component {
@@ -32,7 +40,7 @@ export default class TechTree extends Component {
     this.shape=[]
     for(let i=0;i<technologyNames.length;i++){
 
-      if(this.state.technologyAvailable[i] && !this.state.technologyAvailable[i+1] && this.state.food>=foodPrices[i] && this.state.wood>=woodPrices[i] ){
+      if(this.state.technologyAvailable[technologyNames[i][3]] && technologyNames[i][4] && !this.state.technologyAvailable[i+1] && this.state.food>=technologyNames[i][5] && this.state.wood>=technologyNames[i][6] ){
         this.shape.push("goodShape")
       }else{
         this.shape.push("badShape")
@@ -80,7 +88,6 @@ export default class TechTree extends Component {
       wood:this.state.wood-wood
     })
     this.setShapes()
-    console.log(index)
     if(index===1){
       this.improvedMemory()
     }
@@ -96,7 +103,7 @@ export default class TechTree extends Component {
     this.setState({
       gatherMin:5,
     })
-    setTimeout(()=>{console.log(this.state.gatherMin);this.saveState()},50)
+    setTimeout(()=>{this.saveState()},50)
   }
 
   
@@ -113,7 +120,7 @@ export default class TechTree extends Component {
 
     <div className="techButtons">
 
-    {technologyNames.map((tech, index) => (<TTButton upgrade = {this.upgrade} tech={tech} index={index} shape={this.shape[index]} prices={[foodPrices[index],woodPrices[index]]}></TTButton>))}
+    {technologyNames.map((tech, index) => (<TTButton upgrade = {this.upgrade} tech={tech} index={index} shape={this.shape[index]} prices={[technologyNames[index][5],technologyNames[index][6]]} availability = {technologyNames[index][4]}></TTButton>))}
 
     
 
