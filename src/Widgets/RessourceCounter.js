@@ -9,9 +9,7 @@ const swords = ['Wooden Sword', 'Stone Sword', 'Copper Sword', 'Bronze Sword', '
 export default class RessourceCounter extends Component{
 
     componentDidMount() {
-        console.log("RessourceCounter")
         this.props.updateRessources()
-        
         
         this.Workers = setInterval(()=>{
             this.props.addRessources('W')

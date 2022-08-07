@@ -14,7 +14,6 @@ class MainPage extends Component {
         this.swordsNextRequirements = [50,100,200,350,500,1000]
         if(window.localStorage.getItem('state')!==null){
             this.state=JSON.parse(window.localStorage.getItem('state'))
-            console.log(this.state)
 
         }else{
             this.state = {
@@ -82,7 +81,6 @@ class MainPage extends Component {
     }
     
     componentDidMount() {
-        console.log("MAIN")
         this.updateDates();
         window.addEventListener('beforeunload', this.componentCleanup);
     }
@@ -97,7 +95,6 @@ class MainPage extends Component {
         clearTimeout(this.ud)
         this.ud=setTimeout(()=>{
         let Loot = JSON.parse(window.localStorage.getItem('Loot'))
-        console.log("ra", this.state.wood) 
         if(Loot!=null){
             if(this.state.population-Loot[1]<1){
                 window.localStorage.setItem("Death", "You ran out of people from your village. You are no longer. ") 
@@ -116,7 +113,6 @@ class MainPage extends Component {
             })
             this.delLoot()
         }else{
-            console.log("setting", this.state.food) 
             this.setState({
                 gatherTime:new Date(Date.parse(this.state.gatherTime)),
                 lastWork:new Date(Date.parse(this.state.lastWork)),
@@ -245,7 +241,6 @@ class MainPage extends Component {
     }
 
     updateRessources = () =>{
-        console.log("ha")
         let time = parseInt((new Date() - new Date(Date.parse(this.state.lastWork)))/1000)
          
    

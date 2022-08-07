@@ -36,13 +36,11 @@ class Explore extends Component {
       previousPosition = position+previousPosition
       let e = Math.floor(Math.random() * eValue);
       position = Math.floor(Math.random() * (space-(5*(5-i))));
-      console.log(eValue, e, position+previousPosition,)
       space -= position
       eValue -= e+1
       list.push([position+previousPosition,e, "enemyCharacter "])
     }
     
-    console.log("done")
 
     return list
   }
@@ -92,7 +90,6 @@ class Explore extends Component {
   }
 
   generateEnemy = () =>{
-    console.log(this.state.currentEnemyIndex)
     let index = this.enemyPositionsAndIndexes[this.state.currentEnemyIndex][1]
 
     this.setState({
