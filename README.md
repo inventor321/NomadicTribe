@@ -1,5 +1,7 @@
 # Video Game 
 
+Play the game here : https://inventor321.github.io/NomadicTribe/
+
 Text based survival game.
 
 Made with React JS
