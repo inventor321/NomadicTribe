@@ -397,7 +397,7 @@ class MainPage extends Component {
       { this.state.fade ? (<div className="fade"></div>) : null }
       { !this.state.alive ? (<Navigate to="/GameOver"/>) : null }
 
-      <div className="NT">Nomadic Tribe <button onClick={() => {window.localStorage.clear()}}> Clear </button></div>
+      <div className="NT">Nomadic Tribe</div>
       
       
       <div>
